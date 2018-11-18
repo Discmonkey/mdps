@@ -1,0 +1,4 @@
+gym
+numpy=1.13.1
+scipy=1.0.0
+gym=0.10.9
