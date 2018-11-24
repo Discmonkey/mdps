@@ -22,6 +22,10 @@ def experiment(current_env, eval_func):
 
         # we just grab the score from the expected starting state
         scores_expected.append(score[0])
+
+        if iters > 9999:
+            iters = 0
+
         num_iters.append(iters)
         scores_actual.append(evaluate_solutions(current_env, policy))
         x.append(i)
