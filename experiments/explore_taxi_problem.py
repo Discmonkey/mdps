@@ -1,45 +1,10 @@
-from experiments import get_env
-from mdps.solvers import value_iteration
-from mdps.visualize_policy import visualize_solution
+from experiments.get_experiment import get_env
+from mdps.solvers import policy_eval, policy_improvement, value_iteration
+from mdps.visualize_policy import visualize_ice_policy
+import numpy as np
+import matplotlib.pyplot as plt
+from mdps import evaluate_solutions
 
-"""
-The Taxi Problem
-from "Hierarchical Reinforcement Learning with the MAXQ Value Function Decomposition"
-by Tom Dietterich
-
-Description:
-There are four designated locations in the grid world indicated by R(ed), B(lue), G(reen), and Y(ellow).
-When the episode starts, the taxi starts off at a random square and the passenger is at a random location.
-The taxi drive to the passenger's location, pick up the passenger,
-drive to the passenger's destination (another one of the four specified locations),
-and then drop off the passenger. Once the passenger is dropped off, the episode ends.
-
-Observations:
-There are 500 discrete states since there are 25 taxi positions, 5 possible locations of the passenger
-(including the case when the passenger is in the taxi), and 4 destination locations.
-
-Actions:
-There are 6 discrete deterministic actions:
-- 0: move south
-- 1: move north
-- 2: move east
-- 3: move west
-- 4: pickup passenger
-- 5: dropoff passenger
-
-Rewards:
-There is a reward of -1 for each action and an additional reward of +20 for delivering the passenger.
-There is a reward of -10 for executing actions "pickup" and "dropoff" illegally.
-
-
-Rendering:
-- blue: passenger
-- magenta: destination
-- yellow: empty taxi
-- green: full taxi
-- other letters: locations
-
-"""
 
 name, env = get_env('taxi')
 
@@ -47,4 +12,37 @@ pol, rewards, scores = value_iteration(env, discount_factor=.92)
 
 print env
 
-visualize_solution(env, pol)
+
+def experiment(current_env, eval_func):
+
+    x, scores_expected, num_iters, scores_actual = [], [], [], []
+    for i in np.linspace(0.05, .99, 25):
+        print i
+        policy, score, iters = eval_func(current_env, discount_factor=i)
+
+        # we just grab the score from the expected starting state
+        scores_expected.append(score[0])
+        num_iters.append(iters)
+        scores_actual.append(evaluate_solutions(current_env, policy))
+        x.append(i)
+
+    return x, num_iters, scores_actual
+
+f, (ax1, ax2) = plt.subplots(2, 1, sharex=True)
+
+
+f.suptitle("Final Ice Policies")
+
+ax1.set_title("Iterations to Convergence")
+ax2.set_title("Average Score (100 runs)")
+
+x, num_iters_policy, scores_actual_policy = experiment(env, policy_improvement)
+x, num_iters_value, scores_actual_value = experiment(env, value_iteration)
+
+ax1.plot(x, num_iters_policy, label="Policy Improvement")
+ax1.plot(x, num_iters_value, label="Value Iteration")
+
+ax2.plot(x, scores_actual_policy, label="Policy Improvement")
+ax2.plot(x, scores_actual_policy, label="Value Iteration")
+
+plt.show()
