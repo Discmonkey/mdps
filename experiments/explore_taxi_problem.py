@@ -16,7 +16,7 @@ print env
 def experiment(current_env, eval_func):
 
     x, scores_expected, num_iters, scores_actual = [], [], [], []
-    for i in np.linspace(0.5, .99, 1):
+    for i in np.linspace(0.05, .99, 25):
         print i
         policy, score, iters = eval_func(current_env, discount_factor=i)
 
@@ -29,7 +29,6 @@ def experiment(current_env, eval_func):
         num_iters.append(iters)
         scores_actual.append(evaluate_solutions(current_env, policy))
         x.append(i)
-        break
 
     return x, num_iters, scores_actual
 
