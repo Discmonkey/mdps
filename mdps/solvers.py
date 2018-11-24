@@ -109,8 +109,8 @@ def policy_improvement(env, policy_eval_fn=policy_eval, discount_factor=1.0):
 
             policy[s] = np.eye(env.nA)[best_a]
 
-        if num_iterations > 500:
-            print num_iterations
+        if num_iterations > 10000:
+            policy_stable = True
 
         # If the policy is stable we've found an optimal policy. Return it
         if policy_stable:
