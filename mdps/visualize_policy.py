@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn
+import time
 seaborn.set()
 
 LEFT = 0
@@ -33,7 +34,7 @@ def visualize_ice(env):
     plt.show()
 
 
-def visualize_ice_policy(env, policy):
+def visualize_ice_policy(env, policy, ax=None):
     """
         Plots the ice policy by drawing one of "U, D, R, L" on top off <- ^
     :param env: ice env
@@ -61,13 +62,43 @@ def visualize_ice_policy(env, policy):
 
             annots[y][x] = cc
 
-    seaborn.heatmap(heat_map, cmap="PuBuGn", annot=annots, fmt='')
-    plt.show()
+    seaborn.heatmap(heat_map, cmap="PuBuGn", annot=annots,
+                    fmt='', ax=ax, cbar=False)
+
+
+def visualize_solution(env, policy):
+    current_state = env.reset()
+
+    while True:
+        episode_over = False
+        total_reward = 0
+        env.render()
+        while not episode_over:
+            action = np.argmax(policy[current_state])
+
+            current_state, state_reward, episode_over, _ = env.step(action)
+
+            total_reward += state_reward
+
+            env.render()
+
+            time.sleep(.5)
+
+        print "---- episode ended -----"
+
+        print "--- total score: {}".format(total_reward)
+
+        should_continue = raw_input("Reset and continue? (y/n")
+
+        if should_continue == 'y':
+            env.reset()
+        else:
+            break
 
 
 
-def visualize_taxi_field(taxi_world):
-    pass
+
+
 
 
 

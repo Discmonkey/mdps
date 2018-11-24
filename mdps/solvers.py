@@ -1,6 +1,6 @@
 """
     All code is attributed to:
-    ps://github.com/dennybritz/reinforcement-learning
+    https://github.com/dennybritz/reinforcement-learning
 
 
 """
@@ -95,7 +95,7 @@ def policy_improvement(env, policy_eval_fn=policy_eval, discount_factor=1.0):
 
         # For each state...
         for s in range(env.nS):
-            # The best action we would take under the currect policy
+            # The best action we would take under the current policy
             chosen_a = np.argmax(policy[s])
 
             # Find the best action by one-step lookahead
@@ -108,6 +108,12 @@ def policy_improvement(env, policy_eval_fn=policy_eval, discount_factor=1.0):
                 policy_stable = False
 
             policy[s] = np.eye(env.nA)[best_a]
+
+        if num_iterations > 500:
+            print num_iterations
+
+        if num_iterations > 10000:
+            policy_stable = True
 
         # If the policy is stable we've found an optimal policy. Return it
         if policy_stable:
