@@ -76,6 +76,8 @@ def visualize_solution(env, policy):
         while not episode_over:
             action = np.argmax(policy[current_state])
 
+            if action == 5:
+                print "stopped"
             current_state, state_reward, episode_over, _ = env.step(action)
 
             total_reward += state_reward
@@ -91,7 +93,7 @@ def visualize_solution(env, policy):
         should_continue = raw_input("Reset and continue? (y/n")
 
         if should_continue == 'y':
-            env.reset()
+            current_state = env.reset()
         else:
             break
 

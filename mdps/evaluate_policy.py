@@ -19,6 +19,7 @@ def evaluate_solutions(env, policy, num_iterations=100):
             total_reward += state_reward
 
         all_rewards += float(total_reward)
-        env.reset()
+
+        current_state = env.reset()
 
     return all_rewards / num_iterations

@@ -14,8 +14,9 @@ ax1.set_title("No Slip")
 ax2.set_title("Slip")
 
 for i in np.linspace(0.01, 1, 5):
-    _, stats_no_slip = q_learning(env_no_slip, 100000, .85, .5, i)
-    _, stats_slip = q_learning(env_slip, 100000, .85, .5, i)
+    print i
+    _, stats_no_slip = q_learning(env_no_slip, 1000, .85, .5, i)
+    _, stats_slip = q_learning(env_slip, 1000, .85, .5, i)
 
     ax1.plot(stats_no_slip.episode_rewards, label="Eps: {}".format(i))
     ax2.plot(stats_slip.episode_rewards, label="Eps: {}".format(i))

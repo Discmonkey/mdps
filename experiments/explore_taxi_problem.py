@@ -1,6 +1,6 @@
 from experiments.get_experiment import get_env
 from mdps.solvers import policy_eval, policy_improvement, value_iteration
-from mdps.visualize_policy import visualize_ice_policy
+from mdps.visualize_policy import visualize_ice_policy, visualize_solution
 import numpy as np
 import matplotlib.pyplot as plt
 from mdps import evaluate_solutions
@@ -16,7 +16,7 @@ print env
 def experiment(current_env, eval_func):
 
     x, scores_expected, num_iters, scores_actual = [], [], [], []
-    for i in np.linspace(0.05, .99, 25):
+    for i in np.linspace(0.3, .98, 25):
         print i
         policy, score, iters = eval_func(current_env, discount_factor=i)
 
@@ -27,7 +27,9 @@ def experiment(current_env, eval_func):
             iters = 0
 
         num_iters.append(iters)
-        scores_actual.append(evaluate_solutions(current_env, policy))
+        score_actual = evaluate_solutions(current_env, policy)
+        print score_actual
+        scores_actual.append(score_actual)
         x.append(i)
 
     return x, num_iters, scores_actual
