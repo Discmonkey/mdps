@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def evaluate_solutions(env, policy, num_iterations=100):
+def evaluate_solutions(env, policy, num_iterations=100, min_score=-20):
     current_state = env.reset()
     all_rewards = 0.0
 
