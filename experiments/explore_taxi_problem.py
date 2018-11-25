@@ -51,6 +51,6 @@ ax1.plot(x, num_iters_policy, label="Policy Improvement")
 ax3.plot(x, num_iters_value, label="Value Iteration")
 
 ax2.plot(x, scores_actual_policy, label="Policy Improvement")
-ax4.plot(x, scores_actual_policy, label="Value Iteration")
+ax4.plot(x, scores_actual_value, label="Value Iteration")
 
 plt.show()

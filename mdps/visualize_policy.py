@@ -9,6 +9,7 @@ DOWN = 1
 RIGHT = 2
 UP = 3
 
+
 def get_ice_map(env):
     frozen_world = env.desc
     heat_map = np.zeros(frozen_world.shape)
@@ -32,6 +33,17 @@ def visualize_ice(env):
 
     seaborn.heatmap(heat_map, cmap="PuBuGn")
     plt.show()
+
+
+def convert_q_to_policy(q, env):
+    policy = np.zeros((env.nS, env.nA))
+    for i in range(env.nS):
+        if i in q:
+            policy[i] = q[i]
+        else:
+            policy[i] = [1, 0, 0, 0]
+
+    return policy
 
 
 def visualize_ice_policy(env, policy, ax=None):
