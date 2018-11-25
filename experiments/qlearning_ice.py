@@ -16,8 +16,8 @@ ax2.set_title("Slip")
 
 s = step_decay([5000, 2500, 1000])
 
-_, stats_no_slip = q_learning(env_no_slip, EPISODE_LENGTH, 1.0, .8, .9)
-_, stats_slip = q_learning(env_slip, EPISODE_LENGTH, 1.0, .8, .9)
+_, stats_no_slip = q_learning(env_no_slip, EPISODE_LENGTH, .98, .8, .9)
+_, stats_slip = q_learning(env_slip, EPISODE_LENGTH, .98, .8, .9)
 
 ax1.plot(stats_no_slip.episode_scores, label="No Slipping")
 ax2.plot(stats_no_slip.episode_scores[TAIL:], label="No Slipping > {}".format(TAIL))
