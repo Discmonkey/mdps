@@ -1,3 +1,11 @@
+"""
+    Base code is attributed to:
+    https://github.com/dennybritz/reinforcement-learning
+
+
+"""
+
+
 import numpy as np
 import sys
 from collections import defaultdict
