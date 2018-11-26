@@ -5,7 +5,7 @@ from mdps.evaluate_policy import evaluate_solutions
 from mdps.visualize_policy import visualize_ice_policy, convert_q_to_policy
 import numpy as np
 
-EPISODE_LENGTH = 200000
+EPISODE_LENGTH = 100000
 DECREASE_EPSILON_POINT = 25000
 DECREASE_ALPHA_POINT = EPISODE_LENGTH / 2
 DISCOUNT = .95
